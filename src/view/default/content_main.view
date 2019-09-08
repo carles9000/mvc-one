@@ -1,0 +1,26 @@
+{{ Css( 'app.css' ) }}
+{{ Css( 'app_navbar.css' ) }}
+
+
+<!-- Page Content  -->
+	<div id="page-content-wrapper">
+
+		<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom mynavbar">
+			<button class="btn btn-default" id="menu-toggle"><span class="navbar-toggler-icon"></span></button>			
+			<h3 class="title_nav">&nbsp;</h3>			
+		</nav>	
+
+        <div id="content">
+			<div  align="center"><img id='home' src="{{ App_Url() + '/images/logo.jpg' }}"></div> 
+		</div>
+
+	</div>
+
+	<script>
+		$(document).ready(function () {
+			$("#menu-toggle").click(function(e) {
+			  e.preventDefault();
+			  $("#wrapper").toggleClass("toggled");
+			});
+		});
+	</script>	

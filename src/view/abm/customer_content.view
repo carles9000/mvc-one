@@ -1,0 +1,287 @@
+{{ Css( 'app_navbar.css' ) }}
+
+<!-- Page Content  -->
+<div id="page-content-wrapper">
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom mynavbar">
+		<button class="btn btn-default" id="menu-toggle"><span class="navbar-toggler-icon"></span></button>
+		<h3 class="title_nav">Customer (ABM)</h3>
+	</nav>
+		  
+		  
+	<div id="content">	
+	
+		<div class="row">
+		
+			<div class="col-sm-12 col-sm-offset-3" >
+			
+				<div class="well" >
+				
+					<h3>Personal data</h3>
+					
+					<!--<form role="form" id="contactForm" data-toggle="validator" class="shake">-->
+					
+						<div class="row">
+							<div class="form-group col-sm-3">
+								<label for="name" class="h5">Zip</label>
+								<input type="text" class="form-control" id="zip" placeholder="Enter Zip." required>
+							</div>											
+							
+							<div class="form-group col-sm-3 float-sm-right">
+								<label for="name" class="h5">Id (Recno)</label>
+								<input type="text" class="form-control text-center" id="id" readonly>
+							</div>											
+						</div>
+				
+						
+						<div class="row">
+
+							<div class="form-group col-sm-6">
+								<label for="first" class="h5">First</label>
+								<input type="text" class="form-control" id="first" placeholder="Enter first..." required>
+							</div>
+							
+							<div class="form-group col-sm-6">
+								<label for="last" class="h5">Last</label>
+								<input type="text" class="form-control" id="last" placeholder="Enter last..." required>
+							</div>						
+							
+						</div>	
+
+						<div class="row">
+						
+							<div class="form-group col-sm-2">
+								<label for="age" class="h5">Age</label>
+								<input type="text" class="form-control" id="age" placeholder="Enter age" required data-error="NEW ERROR MESSAGE">
+							</div>
+							
+							<div class="form-group col-sm-4">
+								<label for="hiredate" class="h5">Hiredate</label>
+								<input class="form-control" type="date" id="hiredate" placeholder="Enter Hiredate..." required>
+							</div>
+						</div>															
+						
+						
+						<div class="form-group">
+							<label for="message" class="h5 ">Notas</label>
+							<textarea id="notes" class="form-control" rows="5" placeholder="Enter notes" required></textarea>
+						</div>
+						
+						<button type="button" id="save" class="btn btn-success btn-lg pull-right "><i class='fas fa-save fa-sm myicon' aria-hidden='true'></i>&nbsp;&nbsp;Save</button>
+						<button type="button" id="delete" class="btn btn-danger btn-lg pull-right" style="display:none;"><i class='fas fa-trash-alt fa-sm myicon' aria-hidden='true'></i>&nbsp;&nbsp;Delete</button>
+
+						
+					<!--</form>-->
+					
+				</div>
+			</div>		
+			
+		</div>
+		
+		
+		<script>
+		
+			$( "#zip" ).change( function() {	
+			
+				var cZip = $(this).val()
+				
+				if ( cZip !== '' )
+					GetData( cZip ) 
+				else
+					Clean()			
+			
+			});
+			
+			$( "#save" ).click( Save )
+			$( "#delete" ).click( Delete )
+
+			function GetData( cZip ) {
+			
+				var o = new Object();
+				
+				o[ 'zip' ] = cZip ;
+				
+				console.log( 'POST GETADATA', o )
+				
+				$.post( '{{ Route( 'abm.customer.edit' ) }}', o )
+					.done( function( data ) { 
+						console.log( data )
+						if ( data[ 'success' ] ) {
+
+							if ( data[ 'found' ] == false ) {
+								
+								Msg( "New Member !", "{{ App():Url() + '/images/user.png' }}"	)							
+
+								$( '#delete' ).hide()
+							} else {
+								$( '#delete' ).show()
+							}
+							
+							$( '#zip' ).val( data.row[ 'zip' ] )
+							$( '#id' ).val( data.row[ '_recno' ] )
+							$( '#first' ).val( data.row[ 'first' ] )
+							$( '#last' ).val( data.row[ 'last' ] )
+							$( '#age' ).val( data.row[ 'age' ] )
+							$( '#hiredate' ).val( data.row[ 'hiredate' ] )
+							$( '#notes' ).val( data.row[ 'notes' ] )						
+							
+							$( '#first' ).focus()
+							
+						} else {
+							Clean()												
+							ShowError( data )
+						}
+						
+						//$('#result').html( data );
+					})
+				   .fail( function( data, e ) { 
+							console.log( 'ERROR3', data ); 
+							console.log( 'ERROR4', typeof data ); 
+							console.log( e )} ); 					
+			
+			}
+			
+			function Clean() {	
+			
+				$( '#id' ).val( '' )
+				$( '#zip' ).val( '' )
+				$( '#first' ).val( '' )
+				$( '#last' ).val( '' )
+				$( '#age' ).val( '' )
+				$( '#hiredate' ).val( '' )	
+				$( '#notes' ).val( '' )	
+
+				$( '#zip' ).focus()
+
+				$( '#delete' ).hide()
+			}
+			
+			function Save() {
+			
+				var cZip = $( '#zip' ).val()	
+
+				if ( cZip == '' )
+					return null 
+
+				var o = new Object();
+				
+				o[ 'zip' ] = cZip
+				o[ 'id' ] = $( '#id' ).val()			
+				o[ 'first' ] = $( '#first' ).val()
+				o[ 'last' ] = $( '#last' ).val()
+				o[ 'age' ] = $( '#age' ).val()
+				o[ 'hiredate' ] = $( '#hiredate' ).val()
+				o[ 'notes' ] = $( '#notes' ).val()
+				
+				console.log( 'data', o )
+				
+				$.post( '{{ Route( 'abm.customer.save' ) }}', o )
+				   .done( function( dat ) {	
+				   
+						console.log( 'done', dat )										
+				   
+						if ( dat[ 'success' ] ) {					
+						
+							Msg( "Member <strong>" + cZip + "</strong> updated !", "{{ App():Url() + '/images/save.png' }}"	)
+							
+							Clean()
+							
+							
+							
+						} else
+						
+							ShowError( dat )
+
+					   })
+				   .fail( function( data, e ) { console.log( 'ERROR', data ); console.log( e )} ); 							
+			}
+			
+			function Delete() {
+			
+				var cId = $( '#id' ).val()	
+				
+				console.log( 'Click', cId )
+
+				if ( cId == '' )
+					return null 
+					
+				if ( !confirm( 'Eliminar ?' ) )
+					return null
+
+				var o = new Object();
+				
+				o[ 'id' ] = cId ;				
+				
+				$.post( '{{ Route( 'abm.customer.delete' ) }}', o )
+				   .done( function( dat ) {	
+				   
+						console.log( 'done', dat )
+				   
+						if ( dat[ 'success' ] ) {
+							Msg( 'Registro Eliminado !', "{{ App():Url() + '/images/delete.png' }}" )								
+							Clean()
+						} else {
+						
+							Msg( '<strong>Atención!</strong> Ha ocurrido un error eliminando el registro!', "{{ App():Url() + '/images/delete.png' }}", 'danger' )
+						
+						}
+							
+					})
+				   .fail( function( data, e ) { console.log( 'ERROR', data ); console.log( e )} );
+			}		
+			
+			
+			function ShowError( data ) {
+			
+				console.log( data )
+				
+				var cMsg = ''
+				
+				for (i = 0; i < data.msg.length; i++) {
+				
+					cMsg += data.msg[i][ 'field' ] + ' ' + data.msg[i][ 'msg' ] + '\n'
+				}
+				
+				Msg( '<strong>Atención!</strong><br>' + cMsg, "{{ App():Url() + '/images/delete.png' }}", 'danger' )			
+			}
+			
+			function Msg( cMsg, cImage, cType ) {
+			
+				cImage 	= ( typeof cImage  	== 'string' ) ? cImage : "{{ App():Url() + '/images/nota.png' }}";
+				cType 	= ( typeof cType 	== 'string' ) ? cType : 'info';
+			
+							
+				//	Info -> http://bootstrap-notify.remabledesigns.com/		
+			
+				$.notify({
+					icon: cImage ,
+					message: cMsg								
+				},{
+					type : cType,
+					icon_type: 'image',
+					animate: {
+						enter: 'animated bounceInDown',
+						exit: 'animated bounceOutUp'
+					}													
+				});					
+			
+			}				
+			
+			$(document).ready(function () {
+				Clean()			
+			});
+		
+		</script>	
+		
+		<script>
+			$(document).ready(function () {
+				$("#menu-toggle").click(function(e) {
+				  e.preventDefault();
+				  $("#wrapper").toggleClass("toggled");
+				});
+			});
+		</script>			
+
+	</div>
+
+</div>

@@ -1,0 +1,180 @@
+{{ View( 'default/header_main.view' ) }}
+{{ Css( 'app_navbar.css' ) }}
+
+<style>
+
+	.salary {
+		font-size: 18px;
+		font-weight: bold;
+		color: indianred;
+	}
+
+</style>
+
+
+<body>
+	
+	{{ View( 'default/nav_main.view' ) }}
+	
+	<div class="d-flex" id="wrapper">
+		
+		{{ View( 'menu.view' ) }}
+		
+		<div id="page-content-wrapper">		
+		
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom mynavbar">
+				<button class="btn btn-default" id="menu-toggle"><span class="navbar-toggler-icon"></span></button>
+				
+				<?prg 
+					LOCAL lNew := HB_PValue(2)	
+
+					IF lNew
+						RETU '<h3><i class="fas fa-paperclip fa-sm myicon" aria-hidden="true"></i>&nbsp;&nbsp;New Member</h3><hr>'
+					ELSE
+						RETU '<h3><i class="fas fa-edit fa-sm myicon" aria-hidden="true"></i>&nbsp;&nbsp;Edit Member</h3><hr>'
+					ENDIF							
+				?>
+				
+				
+			</nav>		
+	
+			<div id="content">	
+		
+				<div class="row">
+				
+					<div class="col-sm-12 col-sm-offset-3" style="border-color:1px solid red;" >
+					
+						<div class="well" >													
+
+							<form action="{{ Route( 'tables.customer.update' ) }}" method="POST">
+							
+								<div class="row">
+									<div class="form-group col-sm-4">
+										<label for="zip" class="h5">Zip</label>
+										<input type="text" class="form-control" id="zip" name="zip" value="{{ PARAM 1, 'zip' }}" >
+									</div>	
+									
+									<div class="form-group col-sm-2">
+										<label for="_recno" class="h5">Recno</label>
+										<input type="text" class="form-control text-center" id="_recno" name="_recno"  value="{{ PARAM 1, '_recno' }}"  readonly>
+									</div>	
+
+									<div class="form-group col-sm-2">
+										<label for="salary" class="h5">Salary</label>
+										<input type="text" class="form-control text-center salary" id="salary" name="salary" value="{{ PARAM 1, 'salary' }}" >
+									</div>									
+									
+								</div>
+								
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label for="first" class="h5">First</label>
+										<input type="text" class="form-control" id="first" name="first" value="{{ PARAM 1, 'first' }}" >
+									</div>								
+									
+									<div class="form-group col-sm-6">
+										<label for="last" class="h5">Last</label>
+										<input type="text" class="form-control" id="last" name="last" value="{{ PARAM 1, 'last' }}" >
+									</div>																								
+								</div>	
+								
+								<div class="row">
+								
+									<div class="form-group col-sm-6">
+										<label for="street" class="h5">Street</label>
+										<input type="text" class="form-control" id="street" name="street" value="{{ PARAM 1, 'street' }}" >
+									</div>	
+									
+									<div class="form-group col-sm-6">
+										<label for="city" class="h5">City</label>
+										<input type="text" class="form-control" id="city" name="city" value="{{ PARAM 1, 'city' }}" >
+									</div>															
+								</div>	
+
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label for="state" class="h5">State</label>
+										<input type="text" class="form-control" id="state" name="state" value="{{ PARAM 1, 'state' }}" >									
+									</div>															
+								</div>	
+								
+								<div class="row">							
+									<div class="form-group col-sm-4" >
+										<label for="hiredate" class="h5">Hiredate</label>
+										<input type="date" class="form-control datepicker" id="hiredate" name="hiredate" value="{{ PARAM 1, 'hiredate' }}" >
+									</div>	
+									<div class="form-group col-sm-2">
+										<label for="married" class="h5">Married</label>
+										
+									  <select id="married" class="form-control">
+										<option value="{{ PARAM 1, 'married' }}" selected></option>
+										<option value=".T.">Si</option>
+										<option value=".F.">No</option>
+									  </select>									
+									</div>	
+									<div class="form-group col-sm-2">
+										<label for="age" class="h5">Age</label>
+										<input type="text" class="form-control" style="text-align:center;" id="age" name="age" value="{{ PARAM 1, 'age' }}" >
+									</div>								
+								</div>	
+								
+								<div class="row">						
+
+									<div class="form-group col-sm-12">
+										<label for="notes" class="h5">Notes</label>
+										<input type="text" class="form-control" id="notes" name="notes" value="{{ PARAM 1, 'notes' }}" placeholder="Notes...">
+									</div>															
+													
+								</div>								
+
+								<div class="row">						
+									<div class="col-sm-12">
+										<button type="button" class="btn btn-default " onclick="window.history.go(-1); return false;"><i class='fas fa-arrow-alt-circle-left fa-sm myicon' aria-hidden='true'></i>&nbsp;&nbsp;Back</button>
+										<button type="submit" class="btn btn-primary float-sm-right"><i class='fas fa-save fa-sm myicon' aria-hidden='true'></i>&nbsp;&nbsp;Save</button>
+									</div>
+								</div>
+								
+							</form>
+							
+						</div>
+						
+					</div>		
+					
+				</div>
+				
+			</div>
+			
+		</div>
+
+    </div>
+
+	<script>
+		$(document).ready(function () {
+			$("#menu-toggle").click(function(e) {
+			  e.preventDefault();
+			  $("#wrapper").toggleClass("toggled");
+			});
+		});
+	</script>		
+	
+				
+	<?prg 
+		LOCAL aError 	:= HB_PValue(3)	
+		LOCAL cMSg 		:= ''
+		
+		IF valtype( aError ) == 'A'		
+		
+			FOR nI := 1 TO len( aError )	
+				
+				cMsg += aError[nI][ 'field' ] + ' ' + aError[nI][ 'msg' ] + ' =>' + valtochar(aError[nI][ 'value' ]) + '<br>'
+				
+			NEXT			
+			
+		ENDIF
+
+		retu "<script>$.notify('" + cMsg  + "');</script>"
+	
+	?>	
+    
+</body>
+</html>

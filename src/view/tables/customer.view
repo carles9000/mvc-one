@@ -1,0 +1,16 @@
+{{ View( 'default/header_main.view' ) }}
+
+<body>
+	
+	{{ View( 'default/nav_main.view' ) }}
+	
+	<div class="d-flex" id="wrapper">
+		
+		{{ View( 'menu.view' ) }}		
+
+		{{ View( 'tables/customer_content.view' ) }}				
+
+    </div>					
+
+</body>
+</html>

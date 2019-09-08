@@ -1,0 +1,28 @@
+.logo {
+	height: 45px;
+	margin-right: 20px;
+	float: left;			
+}
+
+#home {
+	width: 475px;
+	height: 185px;
+	margin-top: -100px;
+	margin-left: -150px;
+	left: 50%;
+	top: 50%;
+	position: absolute;
+}
+
+.forweb{
+	font-family: 'Architects Daughter';
+	font-size: 20px;
+	color: #b9d2fe !important;
+	width: auto;
+	padding: 0px !important;
+}
+
+.navbar-mercury {
+	margin-bottom: 0px;
+	padding: .5rem 1rem;
+}
