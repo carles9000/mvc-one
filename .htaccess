@@ -2,9 +2,9 @@
 # DEFINE PATHS  (Relative to DOCUMENT_ROOT)
 # --------------------------------------------------------------------------
 SetEnv APP_TITLE           "MVC One"
-SetEnv PATH_URL            "/mvc/one"
-SetEnv PATH_APP            "/mvc/one"
-SetEnv PATH_DATA           "/mvc/one/data/"
+SetEnv PATH_URL            "/mvc-one"
+SetEnv PATH_APP            "/mvc-one"
+SetEnv PATH_DATA           "/mvc-one/data/"
 
 
 # --------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 			<h3 class="title_nav">&nbsp;</h3>			
 		</nav>	
 
-        <div id="content">
+        <div id="content" style="background-color: white;">
 			<div  align="center"><img id='home' src="{{ App_Url() + '/images/logo.jpg' }}"></div> 
 		</div>
 
