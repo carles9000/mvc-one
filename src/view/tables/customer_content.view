@@ -104,11 +104,29 @@
 											}															
 										},
 										columns: [
-													{ data: "first"	, orderable: false },
+													{ data: "first"	, orderable: false , render: function ( data, type, row ) {	
+																									
+																									if ( row.salary > 50000 )
+																										var c = '<strong>' + data 
+																									else
+																										var c = data 																									
+																									
+																									return c 
+																								} 													
+													},
 													{ data: "last" 	, orderable: false },
 													{ data: "street", orderable: false },																																													
 													{ data: "zip"	, orderable: false },
-													{ data: "salary", orderable: false },
+													{ data: "salary", orderable: false , render: function ( data, type, row ) {	
+																									
+																									if ( data > 50000 )
+																										var c = '<img src="{{ App():Url() + '/images/ball_green.png' }}" />&nbsp;' + data 
+																									else
+																										var c = '<img src="{{ App():Url() + '/images/ball_red.png' }}" />&nbsp;' + data 
+																																																		
+																									return c 
+																								}
+													},													
 													{ data: "_keyno", orderable: false },
 													{ data: null	, orderable: false, width: "60px", defaultContent: "<div style='text-align:center;'><i class='fas fa-edit fa-sm myicon' aria-hidden='true'></i>&nbsp;&nbsp;<i class='fas fa-trash-alt myicon' aria-hidden='true'></i></div>"}
 												],

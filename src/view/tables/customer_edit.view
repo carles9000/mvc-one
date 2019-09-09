@@ -170,10 +170,11 @@
 				
 			NEXT			
 			
-		ENDIF
-
-		retu "<script>$.notify('" + cMsg  + "');</script>"
-	
+			cMsg := "<script>$.notify('" + cMsg  + "');</script>"
+			
+		ENDIF	
+		
+		RETU cMsg
 	?>	
     
 </body>
