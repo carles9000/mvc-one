@@ -1,6 +1,6 @@
 <nav class="navbar navbar-dark bg-dark navbar-mercury">
 	<a href="https://harbourproject.slack.com/messages/CJUHF8SBX/"><img class="logo" src="{{ App():Url() + '/images/hfw_box.png'}}"></a>	
-	<a class="navbar-brand" href="{{ App():Route( 'default' )  }}">{{ App():cTitle }}</a>	
+	<a class="navbar-brand" href="https://github.com/carles9000/mvc-one.git">{{ App():cTitle }}</a>	
 
 	<ul class="navbar-nav ml-auto">
 		<li class="nav-item active">
