@@ -5,13 +5,9 @@
 }
 
 #home {
-	width: 475px;
-	height: 185px;
-	margin-top: -100px;
-	margin-left: -150px;
-	left: 50%;
-	top: 50%;
-	position: absolute;
+    position: relative;
+    top: 150px;
+    margin: auto;
 }
 
 .forweb{
