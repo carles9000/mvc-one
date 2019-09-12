@@ -1,0 +1,163 @@
+{{ Css( 'app_navbar.css' ) }}
+
+<!-- Page Content  -->
+<div id="page-content-wrapper">
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom mynavbar">
+		<button class="btn btn-default" id="menu-toggle"><span class="navbar-toggler-icon"></span></button>
+		<h3 class="title_nav">ABM Customer - (Form)</h3>
+	</nav>
+		  
+		  
+	<div id="content">	
+	
+		<?prg 
+			LOCAL cEvent 		:= GetValue( 'event' )						
+			LOCAL aValidator	:= GetValue( 'validator' )
+			LOCAL cHtml   		:= ''	
+			LOCAL nI  		
+
+			DO CASE 
+				CASE cEvent == 'updated'
+			
+					cHtml := '<div class="alert alert-success" role="alert">'
+					cHtml += '    Registro se ha actualizado'
+					cHtml += '</div>'
+					
+				CASE cEvent == 'error_update'
+				
+					cHtml := '<div class="alert alert-danger" role="alert">'
+					cHtml += '    Error actualizando'
+					cHtml += '</div>'
+
+				CASE cEvent == 'deleted'
+			
+					cHtml := '<div class="alert alert-primary" role="alert">'
+					cHtml += '    Registro se ha eliminado'
+					cHtml += '</div>'
+					
+				CASE cEvent == 'edit_new'
+			
+					cHtml := '<div class="alert alert-primary" role="alert">'
+					cHtml += '    Alta de Registro'
+					cHtml += '</div>'										
+			ENDCASE
+			
+			
+			IF Valtype( aValidator ) == 'A'
+		
+				cHtml := '<div class="alert alert-danger" role="alert">'
+				cHtml += '<strong>Error!</strong></br>'
+					
+				FOR nI := 1 TO len( aValidator )
+					cHtml += aValidator[nI][ 'field' ] + ' ' + aValidator[nI][ 'msg' ] + '</br>'
+				NEXT
+				
+				cHtml += '</div>'
+				
+			ENDIF			
+
+			
+			RETU cHtml			
+		?>
+	
+		<div class="row">
+		
+			<div class="col-sm-12 col-sm-offset-3" >
+			
+				<div class="well" >
+				
+					<h3>Personal data</h3>
+			
+					<form method="POST" action="{{ Route( 'form.customer' ) }}"  >					
+						
+						<div class="row">
+						
+							<div class="form-group col-sm-3">
+								<label for="name" class="h5">Zip</label>
+								<input type="text" class="form-control" id="zip" name="zip" placeholder="Enter Zip." value="{{ GetValue( 'row', 'zip' ) }}" >
+							</div>											
+							
+							<div class="form-group col-sm-3 float-sm-right">
+								<label for="name" class="h5">Id (Recno)</label>
+								<input type="text" class="form-control text-center" name="id" readonly  value="{{ GetValue( 'row', '_recno' ) }}">
+							</div>											
+						</div>
+				
+						
+						<div class="row">
+
+							<div class="form-group col-sm-6">
+								<label for="first" class="h5">First</label>
+								<input type="text" class="form-control" name="first" placeholder="Enter first..." value="{{ GetValue( 'row', 'first' ) }}">
+							</div>
+							
+							<div class="form-group col-sm-6">
+								<label for="last" class="h5">Last</label>
+								<input type="text" class="form-control" name="last" placeholder="Enter last..." value="{{ GetValue( 'row', 'last' ) }}" >
+							</div>						
+							
+						</div>	
+
+						<div class="row">
+						
+							<div class="form-group col-sm-2">
+								<label for="age" class="h5">Age</label>
+								<input type="text" class="form-control" name="age" placeholder="Enter age" value="{{ GetValue( 'row', 'age' ) }}"  >
+							</div>
+							
+							<div class="form-group col-sm-4">
+								<label for="hiredate" class="h5">Hiredate</label>
+								<input class="form-control" type="date" name="hiredate" placeholder="Enter Hiredate..." value="{{ GetValue( 'row', 'hiredate' ) }}" >
+							</div>
+						</div>															
+						
+	
+						<div class="form-group">
+							<label for="message" class="h5 ">Notas</label>
+							<textarea name="notes" class="form-control" rows="5" placeholder="Enter notes" >{{ GetValue( 'row', 'notes' ) }}</textarea>
+						</div>
+						
+						<?prg 
+							LOCAL cEvent 	:= GetValue( 'event' )
+							LOCAL cHtml   	:= ''							
+								
+							DO CASE
+								CASE cEvent == 'default' .OR. cEvent == 'deleted'
+								
+									cHtml := '<button type="submit" name="action" value="search" class="btn btn-info"><i class="fas fa-glasses fa-sm myicon" ></i>&nbsp;&nbsp;Search</button>'
+									
+								CASE cEvent == 'edit' .OR. cEvent == 'error_update' .OR. cEvent == 'error_delete' .OR. cEvent == 'edit_new'
+								
+									cHtml := '<button type="submit" name="action" value="back" class="btn btn-light "><i class="fas fa-arrow-alt-circle-left fa-sm myicon" ></i>&nbsp;&nbsp;Back</button>'									
+									cHtml += '<button type="submit" name="action" value="delete" class="btn btn-danger float-right"><i class="fas fa-trash-alt fa-sm myicon" ></i>&nbsp;&nbsp;Delete</button>'
+									cHtml += '<button type="submit" name="action" value="save" class="btn btn-success float-right" style="margin-right: 10px;"><i class="fas fa-save fa-sm myicon"></i>&nbsp;&nbsp;Save</button>'										
+									
+								CASE cEvent == 'updated' 
+								
+									cHtml := '<button type="submit" name="action" value="back" class="btn btn-light"><i class="fas fa-arrow-alt-circle-left fa-sm myicon" ></i>&nbsp;&nbsp;Back</button>'						
+									
+							ENDCASE
+						
+							RETU cHtml												
+						?>																		
+						
+					</form>
+					
+				</div>
+			</div>		
+			
+		</div>
+		
+		<script>
+			$(document).ready(function () {
+				$("#menu-toggle").click(function(e) {
+				  e.preventDefault();
+				  $("#wrapper").toggleClass("toggled");
+				});
+			});
+		</script>			
+
+	</div>
+
+</div>

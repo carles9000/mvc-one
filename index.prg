@@ -30,16 +30,20 @@ FUNCTION Main()
 			oApp:oRoute:Map( 'GET' 	, 'basic'						, 'basic'							, 'default@basic/basic.prg' )				
 
 
-		//	Customer (ABM)		
+		//	Customer - ABM (Ajax)
 			oApp:oRoute:Map( 'GET' 	, 'abm.customer'				, 'abm/customer'					, 'default@abm/customer.prg' )	
-			oApp:oRoute:Map( 'POST' 	, 'abm.customer.edit'			, 'abm/customer/edit'				, 'edit@abm/customer.prg' )	
-			oApp:oRoute:Map( 'POST' 	, 'abm.customer.save'			, 'abm/customer/save'				, 'save@abm/customer.prg' )	
-			oApp:oRoute:Map( 'POST' 	, 'abm.customer.delete'			, 'abm/customer/delete'				, 'delete@abm/customer.prg' )				
-
+			oApp:oRoute:Map( 'POST' , 'abm.customer.edit'			, 'abm/customer/edit'				, 'edit@abm/customer.prg' )	
+			oApp:oRoute:Map( 'POST' , 'abm.customer.save'			, 'abm/customer/save'				, 'save@abm/customer.prg' )	
+			oApp:oRoute:Map( 'POST' , 'abm.customer.delete'			, 'abm/customer/delete'				, 'delete@abm/customer.prg' )				
+			
+		//	Customer - ABM (Form)
+			oApp:oRoute:Map( 'GET' 	, 'form.customer'				, 'form/customer'					, 'default@form/customer.prg' )	
+			oApp:oRoute:Map( 'POST' , 'form.customer'				, 'form/customer'					, 'control@form/customer.prg' )	
+			
 			
 		//	Customer (CRUD)		
 			oApp:oRoute:Map( 'GET' 	, 'tables.customer'				, 'tables/customer'					, 'default@tables/customer.prg' )				
-			oApp:oRoute:Map( 'POST' 	, 'tables.customer_page'		, 'tables/customer'					, 'page@tables/customer.prg' )
+			oApp:oRoute:Map( 'POST' , 'tables.customer_page'		, 'tables/customer'					, 'page@tables/customer.prg' )
 			oApp:oRoute:Map( 'GET' 	, 'tables.customer.find'		, 'tables/customer/(zip)'			, 'find@tables/customer.prg' )				
 			oApp:oRoute:Map( 'GET'	, 'tables.customer.go'			, 'tables/customer/go/(keyno)'		, 'go@tables/customer.prg' )				
 			oApp:oRoute:Map( 'GET'	, 'tables.customer.edit'		, 'tables/customer/edit/(recno)'	, 'edit@tables/customer.prg' )				

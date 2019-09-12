@@ -16,7 +16,8 @@
 		  
 			<a href="{{ App():Route( 'basic' ) }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-paper-plane"></i>&nbsp;Basic</a>
 			
-			<a href="{{ App():Route( 'abm.customer' ) }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-edit"></i>&nbsp;Customer (ABM)</a>
+			<a href="{{ App():Route( 'abm.customer' ) }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-edit"></i>&nbsp;Customer - (Ajax)</a>
+			<a href="{{ App():Route( 'form.customer' ) }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-edit"></i>&nbsp;Customer - (Form)</a>
 			
 			
 			<a href="" class="list-group-item list-group-item-action bg-light dropdown-toggle dropdown-toggle-split dropdown-menu-right"  

@@ -5,7 +5,7 @@
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom mynavbar">
 		<button class="btn btn-default" id="menu-toggle"><span class="navbar-toggler-icon"></span></button>
-		<h3 class="title_nav">Customer (ABM)</h3>
+		<h3 class="title_nav">ABM Customer - (Ajax)</h3>
 	</nav>
 		  
 		  
@@ -67,9 +67,8 @@
 							<textarea id="notes" class="form-control" rows="5" placeholder="Enter notes" required></textarea>
 						</div>
 						
-						<button type="button" id="save" class="btn btn-success btn-lg pull-right "><i class='fas fa-save fa-sm myicon' aria-hidden='true'></i>&nbsp;&nbsp;Save</button>
-						<button type="button" id="delete" class="btn btn-danger btn-lg pull-right" style="display:none;"><i class='fas fa-trash-alt fa-sm myicon' aria-hidden='true'></i>&nbsp;&nbsp;Delete</button>
-
+						<button type="button" id="save" class="btn btn-success  pull-right" style="display:none;"><i class='fas fa-save fa-sm myicon' ></i>&nbsp;&nbsp;Save</button>
+						<button type="button" id="delete" class="btn btn-danger pull-right" style="display:none;"><i class='fas fa-trash-alt fa-sm myicon' ></i>&nbsp;&nbsp;Delete</button>
 						
 					<!--</form>-->
 					
@@ -112,8 +111,10 @@
 								
 								Msg( "New Member !", "{{ App():Url() + '/images/user.png' }}"	)							
 
+								$( '#save'   ).show()
 								$( '#delete' ).hide()
 							} else {
+								$( '#save'   ).show()
 								$( '#delete' ).show()
 							}
 							
@@ -153,6 +154,7 @@
 
 				$( '#zip' ).focus()
 
+				$( '#save'   ).hide()
 				$( '#delete' ).hide()
 			}
 			
@@ -222,8 +224,7 @@
 							Clean()
 						} else {
 						
-							Msg( '<strong>Atención!</strong> Ha ocurrido un error eliminando el registro!', "{{ App():Url() + '/images/delete.png' }}", 'danger' )
-						
+							Msg( '<strong>Atención!</strong> Ha ocurrido un error eliminando el registro!', "{{ App():Url() + '/images/delete.png' }}", 'danger' )						
 						}
 							
 					})
