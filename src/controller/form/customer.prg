@@ -104,7 +104,9 @@ METHOD Save( o ) CLASS Customer
 	//	Validacion de datos
 	
 		IF ! oValidator:Run( hRoles )
-			o:oResponse:SendJson( { 'success' => .F., 'msg' => oValidator:ErrorMessages() } )					
+			SetValue( 'event'		, 'default' )
+			SetValue( 'validator' 	, oValidator:ErrorMessages() )
+			o:View( 'form/customer.view' )					
 			RETU NIL
 		ENDIF	
 
