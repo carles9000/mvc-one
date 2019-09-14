@@ -23,7 +23,7 @@ RETU SELF
 
 METHOD Default( o ) CLASS Customer
 
-	SetValue( 'event', 'default' )
+	App():Set( 'event', 'default' )
 
 	o:View( 'form/customer.view' )
 
@@ -56,8 +56,8 @@ METHOD Edit( o ) CLASS Customer
 	//	Validacion de datos
 	
 		IF ! oValidator:Run( hRoles )
-			SetValue( 'event'		, 'default' )
-			SetValue( 'validator' 	, oValidator:ErrorMessages() )
+			App():Set( 'event'		, 'default' )
+			App():Set( 'validator' 	, oValidator:ErrorMessages() )
 			o:View( 'form/customer.view' )					
 			RETU NIL
 		ENDIF		
@@ -78,13 +78,13 @@ METHOD Edit( o ) CLASS Customer
 	//	Respuesta solicitada...
 	
 		IF lFound	
-			SetValue( 'event'	, 'edit' )
+			App():Set( 'event'	, 'edit' )
 		ELSE
-			SetValue( 'event'	, 'edit_new' )
+			App():Set( 'event'	, 'edit_new' )
 		ENDIF
 		
-		SetValue( 'found'	, lFound )
-		SetValue( 'row'		, hRow   )
+		App():Set( 'found'	, lFound )
+		App():Set( 'row'		, hRow   )
 
 		o:View( 'form/customer.view' )			
 
@@ -104,8 +104,8 @@ METHOD Save( o ) CLASS Customer
 	//	Validacion de datos
 	
 		IF ! oValidator:Run( hRoles )
-			SetValue( 'event'		, 'default' )
-			SetValue( 'validator' 	, oValidator:ErrorMessages() )
+			App():Set( 'event'		, 'default' )
+			App():Set( 'validator' 	, oValidator:ErrorMessages() )
 			o:View( 'form/customer.view' )					
 			RETU NIL
 		ENDIF	
@@ -127,12 +127,12 @@ METHOD Save( o ) CLASS Customer
 		lSuccess 	:= oCusto:Update( @cId, hData )	
 
 		IF lSuccess		
-			SetValue( 'event'	, 'updated' )
+			App():Set( 'event'	, 'updated' )
 		ELSE
-			SetValue( 'event'	, 'error_update' )
+			App():Set( 'event'	, 'error_update' )
 		ENDIF
 
-		SetValue( 'row'		, hData   )		
+		App():Set( 'row'		, hData   )		
 		
 	//	Respuesta solicitada...
 
@@ -161,9 +161,9 @@ METHOD Delete( o ) CLASS Customer
 		lSuccess 	:= oCusto:Delete( cId )
 		
 		IF lSuccess		
-			SetValue( 'event'	, 'deleted' )
+			App():Set( 'event'	, 'deleted' )
 		ELSE
-			SetValue( 'event'	, 'error_delete' )
+			App():Set( 'event'	, 'error_delete' )
 		ENDIF			
 		
 	//	Respuesta solicitada...
